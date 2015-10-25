@@ -11,7 +11,7 @@ depends=('pmenu'
 	'mhwd'
 	'awk'
 	'bash')
-optdepends=('pacli: package management menu item'
+optdepends=('pacli: package management menu item')
 makedepends=('git')
 source=("git://github.com/Chrysostomus/$pkgname")
 md5sums=('SKIP')
