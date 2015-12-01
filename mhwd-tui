@@ -83,16 +83,13 @@ mhwd-kernel -l | awk 'NR > 1 { print $2}' > .available_kernels
     while true; do
     clear
     echo ""
-    echo -e "                             $NC ::mhwd-tui:: $NC "
-    echo ""
-    echo -e ""
+    echo -e "                             $NC ::mhwd-tui::  "
     echo -e " ┌────────────────────────────────────────────────────────────────────────────┐"
-    echo -e " │  $NC  1 $NC  Install Kernel                      $NC  2 $NC  Remove kernel             │"
-    echo -e " │  $NC  3 $NC  Use free graphics                   $NC  4 $NC  Use nonfree graphics      │"
-    echo -e " │  $NC  5 $NC  Package manager                     $NC  6 $NC  List installed drivers    │"    
-
-    echo " └────────────────────────────────────────────────────────────────────────────┘"
-        echo -e "    $NC Select a number and press [Enter]$NC $NC - 0 Exit mhwd-tui$NC"
+    echo -e " │    1   Install Kernel                        2   Remove kernel             │"
+    echo -e " │    3   Use free graphics                     4   Use nonfree graphics      │"
+    echo -e " │    5   List installed drivers                                              │"    
+    echo -e " └────────────────────────────────────────────────────────────────────────────┘"
+        echo -e "         Select a number and press [Enter]  - 0 Exit mhwd-tui"
     echo ""
     read -s -n1 choix
     case $choix in
@@ -100,43 +97,26 @@ mhwd-kernel -l | awk 'NR > 1 { print $2}' > .available_kernels
             echo
             install_kernel
             echo ""
-            echo -e "$NC Operation complete. To return to mhwd-tui press [Enter] $NC"
-            read
             ;;
         2)
             echo
             remove_kernel
             echo ""
-            echo -e "$NC Operation complete. To return to mhwd-tui press [Enter] $NC"
-            read
             ;;
         3)
             echo
             sudo mhwd -a pci free 0300
             echo ""
-            echo -e "$NC Operation complete. To return to mhwd-tui press [Enter] $NC"
-            read
             ;;
         4)
             echo
             sudo mhwd -a pci nonfree 0300
             echo ""
-            echo -e "$NC Operation complete. To return to mhwd-tui press [Enter] $NC"
-            read
             ;;
         5)
             echo
-            pacli
-            echo ""
-            echo -e "$NC Operation complete. To return to mhwd-tui press [Enter] $NC"
-            read
-            ;;
-        6)
-            echo
             mhwd -li -d
             echo ""
-            echo -e "$NC Operation complete. To return to mhwd-tui press [Enter] $NC"
-            read
             ;;
 
         0)
