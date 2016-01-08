@@ -89,7 +89,7 @@ mhwd-kernel -l | awk 'NR > 1 { print $2}' > .available_kernels
     echo -e " │    3   Use free graphics                     4   Use nonfree graphics      │"
     echo -e " │    5   List installed drivers                                              │"    
     echo -e " └────────────────────────────────────────────────────────────────────────────┘"
-        echo -e "         Select a number and press [Enter]  - 0 Exit mhwd-tui"
+    echo -e "          Select a number                       0 Exit mhwd-tui"
     echo ""
     read -s -n1 choix
     case $choix in
