@@ -107,15 +107,25 @@ mhwd-kernel -l | awk 'NR > 1 { print $2}' > .available_kernels
             echo
             sudo mhwd -a pci free 0300
             echo ""
+            echo "Done. Press any key to continue"
+            read
+            echo ""
+
             ;;
         4)
             echo
             sudo mhwd -a pci nonfree 0300
             echo ""
+            echo "Done. Press any key to continue"
+            read
+            echo ""
             ;;
         5)
             echo
             mhwd -li -d
+            echo ""
+            echo "Press any key to continue"
+            read
             echo ""
             ;;
 
