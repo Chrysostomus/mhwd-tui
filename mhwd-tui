@@ -77,18 +77,27 @@ if [[ $picks ]]; then
 fi
 }
 
-mhwd-kernel -li | awk 'NR==1 {print $4}' | tr -d '()' > .running_kernel
-mhwd-kernel -li | awk 'NR > 2 { print $2}' > .installed_kernels
-mhwd-kernel -l | awk 'NR > 1 { print $2}' > .available_kernels
+mhwd-kernel -li | awk 'NR==1 {print $4}' | tr -d '()' > .running_kernel &
+mhwd-kernel -li | awk 'NR > 2 { print $2}' > .installed_kernels &
+mhwd-kernel -l | awk 'NR > 1 { print $2}' > .available_kernels &
+inxi -c 5 -b > .inxi_info &
 
     while true; do
     clear
     echo ""
-    echo -e "                             $NC ::mhwd-tui::  "
+    echo -e "                             $NC ::Hardware::  "
     echo -e " ┌────────────────────────────────────────────────────────────────────────────┐"
-    echo -e " │    1   Install Kernel                        2   Remove kernel             │"
+    echo -e " │    1   Install a kernel                      2   Remove a kernel           │"
     echo -e " │    3   Use free graphics                     4   Use nonfree graphics      │"
-    echo -e " │    5   List installed drivers                                              │"    
+    echo -e " │    5   List installed drivers                6   Configure touchpad        │"
+    echo -e " │    7   Configure printers                    8   Configure monitors        │"
+    echo -e " └────────────────────────────────────────────────────────────────────────────┘"
+    echo -e "                           $NC ::Information::  "
+    echo -e " ┌────────────────────────────────────────────────────────────────────────────┐"
+    echo -e " │    I   Basic system information              T   System temperatures       │"
+    echo -e " │    D   Disk usage                            U   Home folder usage         │"
+    echo -e " │    H   Detailed hardware information         B   Bios information          │"
+    echo -e " │    P   Prosessor information                 M   Mountpoints and partitions│"
     echo -e " └────────────────────────────────────────────────────────────────────────────┘"
     echo -e "          Select a number                       0 Exit mhwd-tui"
     echo ""
@@ -128,6 +137,96 @@ mhwd-kernel -l | awk 'NR > 1 { print $2}' > .available_kernels
             mhwd -li -d
             echo ""
             echo -e "Done. Press ${BLUE}[Enter]$NC to continue | ${BLUE}ctrl+c$NC to quit"
+            read
+            echo ""
+            ;;
+        6)
+            echo
+            xinput_tui
+            echo ""
+            echo "Press any key to continue"
+            read
+            echo ""
+            ;;
+        7)
+            echo
+            bcups
+            echo ""
+            echo "Press any key to continue"
+            read
+            echo ""
+            ;;
+        8)
+            echo
+            brandr
+            echo ""
+            echo "Press any key to continue"
+            read
+            echo ""
+            ;;
+        I|i)
+            echo
+            inxi -c 5 -b
+            echo ""
+            echo "Press any key to continue"
+            read
+            echo ""
+            ;;
+        T|t)
+            echo
+            sensors
+            echo ""
+            echo "Press any key to continue"
+            read
+            echo ""
+            ;;
+        D|d)
+            echo
+            ncdu -x /
+            echo ""
+            echo "Press any key to continue"
+            read
+            echo ""
+            ;;
+        B|b)
+            echo
+            sudo dmidecode -t bios
+            echo ""
+            echo "Press any key to continue"
+            read
+            echo ""
+            ;;
+        P|p)
+            echo
+            sudo dmidecode -t processor
+            lscpu
+            echo ""
+            echo "Press any key to continue"
+            read
+            echo ""
+            ;;
+        H|h)
+            echo
+            sudo lshw > .lshw && nano .lshw            
+            rm .lshw
+            echo ""
+            echo "Press any key to continue"
+            read
+            echo ""
+            ;;
+        U|u)
+            echo
+            ncdu -x $HOME
+            echo ""
+            echo "Press any key to continue"
+            read
+            echo ""
+            ;;
+        M|m)
+            echo
+            lsblk -o NAME,SIZE,FSTYPE,LABEL,MOUNTPOINT,UUID
+            echo ""
+            echo "Press any key to continue"
             read
             echo ""
             ;;
