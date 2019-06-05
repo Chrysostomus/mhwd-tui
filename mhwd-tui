@@ -96,7 +96,7 @@ inxi -c 5 -b > .inxi_info &
     echo -e " │    I   Basic system information              T   System temperatures       │"
     echo -e " │    D   Disk usage                            U   Home folder usage         │"
     echo -e " │    H   Detailed hardware information         B   Bios information          │"
-    echo -e " │    P   Prosessor information                 M   Mountpoints and partitions│"
+    echo -e " │    P   Processor information                 M   Mountpoints and partitions│"
     echo -e " └────────────────────────────────────────────────────────────────────────────┘"
     echo -e "          Select a number                       0 Exit mhwd-tui"
     echo ""
