@@ -4,7 +4,7 @@ RED='\e[41m'
 BLUE='\e[44m'
 ORANGE='\e[46m'
 NC='\e[0m'
-trap 'rm $HOME/{.installed_kernels,.available_kernels}' EXIT
+trap 'rm $HOME/{.installed_kernels,.available_kernels} &>/dev/null' EXIT
 in_array() {
     local haystack=${1}[@]
     local needle=${2}
@@ -17,7 +17,8 @@ in_array() {
 }
 
 function install_kernel {
-PS3="which kernel do you wish to install? (press ctrl+d to preceed, ctrl+c to cancel): "
+PS3="choose a kernel to install (ctrl+d to continue | ctrl+c to quit) "
+
 # Gather the results in an array.
 kernels=($(grep -v -f .installed_kernels .available_kernels) "proceed" "cancel")
 
@@ -47,7 +48,7 @@ fi
 }
 
 function remove_kernel {
-PS3="which kernel do you wish to remove? (press ctrl+d to preceed, ctrl+c to cancel): "
+PS3="choose a kernel to remove (ctrl+d to continue | ctrl+c to quit) "
 # Gather the results in an array.
 kernels=($(grep -v -f .running_kernel .installed_kernels) "proceed" "cancel")
 
@@ -113,19 +114,21 @@ inxi -c 5 -b > .inxi_info &
             echo ""
             ;;
         3)
-            echo
+            echo "installing free video-driver"
+            echo ""
             sudo mhwd -a pci free 0300
             echo ""
-            echo "Done. Press any key to continue"
+            echo -e "Done. Press ${BLUE}[Enter]$NC to continue | ${BLUE}ctrl+c$NC to quit"
             read
             echo ""
 
             ;;
         4)
-            echo
+            echo "installing proprietary driver"
+            echo ""
             sudo mhwd -a pci nonfree 0300
             echo ""
-            echo "Done. Press any key to continue"
+            echo -e "Done. Press ${BLUE}[Enter]$NC to continue | ${BLUE}ctrl+c$NC to quit"
             read
             echo ""
             ;;
@@ -133,7 +136,7 @@ inxi -c 5 -b > .inxi_info &
             echo
             mhwd -li -d
             echo ""
-            echo "Press any key to continue"
+            echo -e "Done. Press ${BLUE}[Enter]$NC to continue | ${BLUE}ctrl+c$NC to quit"
             read
             echo ""
             ;;
@@ -234,9 +237,10 @@ inxi -c 5 -b > .inxi_info &
             ;;
         *)
             echo -e "$RED Wrong option $NC"
-            echo "Wait and try again later..."
             echo ""
-            sleep 3
+            echo "Wait and try again ..."
+            echo ""
+            sleep 2
             clear
             ;;
     esac
